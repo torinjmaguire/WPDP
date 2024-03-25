@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "qdir.h"
+#include "qdebug.h"
 
 QStringList fileNames = {
     "Incident and Illness Report",
@@ -13,7 +14,7 @@ QStringList fileNames = {
     "Tour Sheet"
 };
 
-QDir dir;
+QDir dir = QDir("C:/Users/Wannaplay/Desktop/Wanna Play Documents");
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->comboBox->insertItems(0, fileNames);
-    ui->comboBox->setCurrentIndex(-1);
+    //ui->comboBox->setCurrentIndex(-1);
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +41,9 @@ void MainWindow::on_pushButton_clicked()
 
     int comboIndex = ui->comboBox->currentIndex();
 
-    QDebug(&dir.homePath());
+    std::string filePath = qUtf8Printable(dir.filePath(fileNames[comboIndex]));
+    qDebug() << filePath;
+
+
 }
 
