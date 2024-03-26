@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "qdir.h"
 #include "qdebug.h"
+#include <windows.h>
 
 QStringList fileNames = {
     "Incident and Illness Report",
@@ -41,9 +42,11 @@ void MainWindow::on_pushButton_clicked()
 
     int comboIndex = ui->comboBox->currentIndex();
 
-    std::string filePath = qUtf8Printable(dir.filePath(fileNames[comboIndex]));
+    const char* filePath = qUtf8Printable(dir.filePath(fileNames[comboIndex] + ".pdf"));
     qDebug() << filePath;
 
-
+    for (int i = 0; i < copyNum; i++) {
+        ShellExecuteA(NULL, "print", filePath, NULL, NULL, SW_SHOWNORMAL);
+    }
 }
 
